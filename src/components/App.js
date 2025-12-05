@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import "../styles/App.css";
-import TodoItem from "./ReactMemo";
+import TodoItem from "./ReactMemo"; // should be memoized
 import ExpensiveCalculation from "./UseMemo";
 
 const App = () => {
@@ -12,12 +12,13 @@ const App = () => {
     console.log("Todos updated:", todos);
   }, [todos]);
 
+  // Memoized expensive calculation
   const expensiveValue = useMemo(() => ExpensiveCalculation(counter), [counter]);
 
-  const addTodo = () => {
-    setTodos([...todos, "New todo"]);
-  };
+  // Add default todo
+  const addTodo = () => setTodos([...todos, "New todo"]);
 
+  // Add custom todo only if input > 5 chars
   const addCustomTodo = () => {
     if (input.length > 5) {
       setTodos([...todos, input]);
@@ -41,6 +42,7 @@ const App = () => {
       <button onClick={addTodo}>Add Todo</button>
 
       <input
+        type="text"
         value={input}
         placeholder="Enter custom task..."
         onChange={(e) => setInput(e.target.value)}
@@ -50,9 +52,11 @@ const App = () => {
       <hr />
 
       <h3>Your Tasks:</h3>
-      {todos.map((item, index) => (
-        <TodoItem key={index} text={item} />
-      ))}
+      <ul>
+        {todos.map((item, index) => (
+          <TodoItem key={index} text={item} />
+        ))}
+      </ul>
     </div>
   );
 };

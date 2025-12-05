@@ -2,7 +2,7 @@ import React from "react";
 
 const TodoItem = ({ text }) => {
   console.log("Rendering:", text);
-  return <p>{text}</p>;
+  return <li>{text}</li>; // Changed to <li> for semantic list
 };
 
 export default React.memo(TodoItem);
